@@ -1,38 +1,36 @@
-﻿# syukei
+# syukei
 
 ## Preparation
-
 ### read path 
-# source("\\\\center/Client/Prospects/Quaras/05_data/09_集計/20_アンケートデータ集計/Rコード/code/")
-code_path <- "\\\\center/Client/Prospects/Quaras/05_data/09_集計/20_アンケートデータ集計/Rコード/code"
-data_path <- "\\\\center/Client/Prospects/Quaras/05_data/09_集計/20_アンケートデータ集計/dat"
-result_path <- "\\\\center/Client/Prospects/Quaras/05_data/09_集計/20_アンケートデータ集計/result"
+data_path <- paste(getwd(), "/ローデータ_csv", sep = "")
+result_path <- paste(getwd(), "集計結果", sep = "")
+ctg_brand_excelname <- "調査カテゴリ_ブランド一覧.xlsx"
 
 ### read library 
 # setwd(code_path)
 # source("library.R")
 #library--------------------
-library(gridExtra)
+# library(gridExtra)
 library(tidyverse)
-library(scales)
+# library(scales)
 library(data.table)
-library(readxl)
-library(rstan)
+# library(readxl)
+# library(rstan)
 
 # install.packages('readxl')
 library(readxl)
 
 # install.packages("xlsx")
-# library(xlsx)
+library(xlsx)
 
 # install.packages('rJava')
-# library(rJava)
+library(rJava)
 
 #install.packages("rex")
 library(rex)
 
-fread2     <- function(filename){fread(filename, data.table = F, stringsAsFactors = F) %>% as_tibble()}
-fread2utf8 <- function(filename){fread(filename, data.table = F, stringsAsFactors = F, encoding = "UTF-8") %>% as_tibble()}
+# fread2     <- function(filename){fread(filename, data.table = F, stringsAsFactors = F) %>% as_tibble()}
+# fread2utf8 <- function(filename){fread(filename, data.table = F, stringsAsFactors = F, encoding = "UTF-8") %>% as_tibble()}
 
 
 ### set parameter
@@ -136,7 +134,8 @@ get_data <- function(ex_result, q, exc, gp, i){
 
 ### read ctg_brand.csv & reshape it
 setwd(data_path)
-ctg_brand <- read.csv("ctg_brand.csv") %>% as.tibble()
+# ctg_brand <- read.csv("ctg_brand.csv") %>% as.tibble()
+ctg_brand <- read_excel(ctg_brand_excelname)
 num_ctg <- substr(as.matrix(ctg_brand[, 1]), 1, 2)
 num_brand <- substr(as.matrix(ctg_brand[, 3]), 1, 2)
 colnames(num_brand) <- "num_brand"
@@ -174,8 +173,7 @@ ga_list <- as.tibble(ga_list)
 len_galist <- dim(ga_list)[1]
 ncols_galist <- dim(ga_list)[2]
 ### count rows(sex & age) from each ctg
-rowcount_mat <- ga_list %>% group_by(ctg) %>% summarise(n())
-colnames(rowcount_mat) <- c("ctg", "n")
+rowcount_mat <- ga_list %>% group_by(ctg) %>% summarise(count = n())
 
 ### make rowcount matrix by month
 rowcount_mat <- rowcount_mat %>%
@@ -281,7 +279,7 @@ for(l in 1:len_dl){
       for(i in 1:20){
         cname <- paste(ctg, "q", q, "_", i, sep = "")
         exc <- ex_data_k %>% select_(cname) %>% na.omit()
-        ex_result <- get_data(ex_result, q, exc, gp, i)
+        ex_result <- get_data(ex_result, q, exc, gp, i) # get_data function is defined by header code 
       }
     }
   }
@@ -294,9 +292,9 @@ for(l in 1:len_dl){
   }
 }
 result_all <- bind_rows(ex_result11, ex_result12)
-  
+
 # write result
 setwd(result_path)
-getwd()
+print(paste("the result is saved in ", getwd(), sep = ""))
 write.csv(result_all, "アンケート集計結果.csv")
 

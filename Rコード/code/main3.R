@@ -3,10 +3,8 @@
 ## Preparation
 
 ### read path 
-# source("\\\\center/Client/Prospects/Quaras/05_data/09_集計/20_アンケートデータ集計/Rコード/code/")
-# code_path <- "\\\\center/Client/Prospects/Quaras/05_data/09_集計/20_アンケートデータ集計/Rコード/code"
-data_path <- "\\\\center/Client/Prospects/Quaras/05_data/09_集計/20_アンケートデータ集計/ローデータ_csv"
-result_path <- "\\\\center/Client/Prospects/Quaras/05_data/09_集計/20_アンケートデータ集計/集計結果"
+data_path <- paste(getwd(), "/ローデータ_csv", sep = "")
+result_path <- paste(getwd(), "集計結果", sep = "")
 ctg_brand_excelname <- "調査カテゴリ_ブランド一覧.xlsx"
 
 ### read library 

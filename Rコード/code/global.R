@@ -1,2 +1,0 @@
-value_col = c("q1_ninti", "q2_pre_ninti", "q3_kyomi_kanshin", "q4_kokan", "q5_riyo_iko", "q6_suisyo_iko")
-# gnd_age = c("01teen", "02男性20代", "03男性30代", "04男性40代", "05男性50代", "06男性60代", "07女性20代", "08女性30代", "09女性40代", "10女性50代", "11女性60代")
