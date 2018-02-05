@@ -1,0 +1,2 @@
+# code_path = "\\\\center/Client/Prospects/Quaras/05_data/09_集計/20_アンケートデータ集計/Rコード/code"
+# data_path = "\\\\center/Client/Prospects/Quaras/05_data/09_集計/20_アンケートデータ集計"
